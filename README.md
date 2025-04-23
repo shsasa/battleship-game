@@ -1,16 +1,33 @@
 # 🛳️ Battleship Web Game
 
-A simple battleship game built using **JavaScript**, **HTML**, and **CSS** to practice basic web development concepts. The player competes against the computer in a classic grid-based naval strategy game.
+**Date:** 4/23/2025  
+**By:** Syed Hussain
 
-## 🎮 How to Play
-- Each player (you and the computer) places ships on a hidden grid.
-- Take turns attacking grid cells.
-- A hit damages the ship; a miss does nothing.
-- The first to destroy all of the opponent’s ships wins!
+[GitHub](#) | [LinkedIn](#) | [Website](#)
+
+---
+
+## 🎮 Description
+
+A simple, web-based Battleship game where players compete against the computer. Each side places ships on a hidden grid and takes turns guessing the location of enemy ships. The game ends when all ships of one side are destroyed.  
+This project was created to practice core JavaScript, HTML, and CSS skills.
+
+---
+
+## 💻 Technologies Used
+
+- HTML5
+- CSS3
+  - Flexbox
+  - Grid Layout
+- JavaScript (Vanilla)
+
+---
 
 ## 🚀 Getting Started
 
-### 1. Clone the repository
+1. Clone the repository:
+
 ```bash
 git clone https://github.com/shsasa/battleship-game.git
 cd battleship-game
