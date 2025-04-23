@@ -1,0 +1,22 @@
+Start Game:
+    Initialize player and computer grids
+    Allow player to place ships manually
+    Randomly place ships for the computer
+    Hide opponent ships from each other
+
+While no winner:
+    If player's turn:
+        Get cell input from user
+        Check if hit or miss
+        Update UI and game state
+
+    If computer's turn:
+        Randomly pick a cell not previously targeted
+        Check if hit or miss
+        Update UI and game state
+
+    Check for victory:
+        If all ships of a player are hit, end game
+
+Show result:
+    Announce winner and offer replay
