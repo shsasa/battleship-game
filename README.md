@@ -3,7 +3,7 @@
 **Date:** 4/23/2025  
 **By:** Syed Hussain
 
-[GitHub](#) | [LinkedIn](#) | [Website](#)
+[GitHub](https://www.github.com/shsasa/) | [LinkedIn](https://www.linkedin.com/in/shsasa/) | [Website](#)
 
 ---
 
