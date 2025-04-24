@@ -13,7 +13,7 @@ A simple, web-based Battleship game where players compete against the computer. 
 This project was created to practice core JavaScript, HTML, and CSS skills.
 
 
-![Image] (https://github.com/shsasa/battleship-game/blob/main/image.png?raw=true)
+![Image]([https://d7hftxdivxxvm.cloudfront.net/?height=800&quality=50&resize_to=fit&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F0UrX0F8LE_D62x-XyXb7mg%2Fnormalized.jpg&width=535](https://github.com/shsasa/battleship-game/blob/main/image.png?raw=true))
 
 ---
 
