@@ -12,6 +12,8 @@
 A simple, web-based Battleship game where players compete against the computer. Each side places ships on a hidden grid and takes turns guessing the location of enemy ships. The game ends when all ships of one side are destroyed.  
 This project was created to practice core JavaScript, HTML, and CSS skills.
 
+---
+
 ## 🪧 Wireframe
 
 ![Image](https://raw.githubusercontent.com/shsasa/battleship-game/refs/heads/main/image.png)
