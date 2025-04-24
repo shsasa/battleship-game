@@ -1,6 +1,6 @@
 Start Game:
     Initialize player and computer grids
-    Allow player to place ships manually
+    Allow player to place ships manually ##
     Randomly place ships for the computer
     Hide opponent ships from each other
 
