@@ -17,6 +17,11 @@ header {
   width: 40vh;
   background-color: gray;
   margin: 20px;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: repeat(10, 1fr);
+
+  align-self: center;
 }
 .war-area {
   width: 80vw;
@@ -25,4 +30,11 @@ header {
   justify-content: space-around;
 
   /* grid-row: 1fr 1fr; */
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background-color: aqua;
+  /* margin: 1px; */
 }
