@@ -1,0 +1,28 @@
+body {
+  justify-self: center;
+  border: solid 3px rgb(192, 192, 192);
+  height: 90vh;
+  width: 90vw;
+  border-radius: 20px;
+}
+header {
+  justify-self: center;
+  align-content: center;
+
+  height: 10vh;
+}
+
+.war-box {
+  height: 40vh;
+  width: 40vh;
+  background-color: gray;
+  margin: 20px;
+}
+.war-area {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  justify-content: space-around;
+
+  /* grid-row: 1fr 1fr; */
+}
