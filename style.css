@@ -24,12 +24,18 @@ header {
   align-self: center;
 }
 .war-area {
-  width: 80vw;
-  height: 80vh;
   display: flex;
   justify-content: space-around;
 
   /* grid-row: 1fr 1fr; */
+}
+main {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .cell {
@@ -37,4 +43,18 @@ header {
   height: 30px;
   background-color: aqua;
   /* margin: 1px; */
+}
+button {
+  /* width: 30px; */
+  height: 30px;
+  background-color: aqua;
+  border: none;
+  cursor: pointer;
+}
+.game-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
