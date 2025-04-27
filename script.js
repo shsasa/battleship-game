@@ -4,6 +4,7 @@ const startButton = document.getElementById('start')
 const resetButton = document.getElementById('reset')
 const botBox = document.getElementById('bot')
 const playerBox = document.getElementById('player')
+const turnText = document.getElementById('turn-info')
 
 class Cell {
   constructor(id) {
@@ -43,6 +44,48 @@ const botShips = []
 const playerShipsCount = 5
 const botShipsCount = 5
 
+const turn = () => {
+  if (playerTurn) {
+    turnText.innerText = 'bot Turn'
+    playerTurn = false
+  } else {
+    turnText.innerText = 'player Turn'
+    playerTurn = true
+  }
+}
+
+const hitCell = (box, element) => {
+  if (playerTurn) {
+    if (box.id === 'player') {
+      alert('You cannot hit your own ship')
+      return
+    }
+    const cellId = element.target.id
+    const cell = botCells.find((cell) => cell.id === cellId)
+    if (cell.isHit) {
+      alert('Already hit this cell')
+      return
+    }
+    if (cell.isShip) {
+      cell.isHit = true
+      element.target.style.backgroundColor = 'red'
+      const ship = botShips.find((ship) => ship.cells.includes(cell))
+      ship.checkSunk()
+      if (ship.isSunk) {
+        alert('You sunk a ship!')
+      }
+    } else {
+      cell.isHit = true
+      element.target.style.backgroundColor = 'black'
+
+      setTimeout(() => {
+        turn()
+        botTurn()
+      }, 1000)
+    }
+  }
+}
+
 const addCellToBox = (box) => {
   for (let i = 1; i <= 100; i++) {
     const cell = document.createElement('div')
@@ -55,29 +98,45 @@ const addCellToBox = (box) => {
       botCells.push(new Cell(cell.id))
     }
 
-    cell.addEventListener('click', (e) => {
+    cell.addEventListener('click', (element) => {
       if (!gameStart) {
         alert('Game not started yet')
         return
-      }
-      if (playerTurn) {
-        if (box.id === 'player') {
-          alert('You cannot hit your own ship')
-          return
-        }
-        const cellId = e.target.id
-        const cell = botCells.find((cell) => cell.id === cellId)
-        if (cell.isHit) {
-          alert('Already hit this cell')
-          return
-        }
-        cell.isHit = true
-        e.target.style.backgroundColor = 'red'
-        // playerTurn = false
+      } else {
+        hitCell(box, element)
       }
     })
 
     box.appendChild(cell)
+  }
+}
+const botTurn = () => {
+  if (playerTurn) {
+    return
+  }
+
+  const randomCell = Math.floor(Math.random() * 100)
+  const cell = playerCells[randomCell]
+  if (cell.isHit) {
+    botTurn()
+    return
+  }
+  cell.isHit = true
+  const cellElement = document.getElementById(cell.id)
+  if (cell.isShip) {
+    cellElement.style.backgroundColor = 'red'
+    const ship = playerShips.find((ship) => ship.cells.includes(cell))
+    ship.checkSunk()
+    if (ship.isSunk) {
+      alert('Bot sunk your ship!')
+    }
+    setTimeout(() => {
+      botTurn()
+    }, 2000)
+    return
+  } else {
+    cellElement.style.backgroundColor = 'black'
+    turn()
   }
 }
 
