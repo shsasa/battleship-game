@@ -5,7 +5,12 @@ const resetButton = document.getElementById('reset')
 const botBox = document.getElementById('bot')
 const playerBox = document.getElementById('player')
 const turnText = document.getElementById('turn-info')
-
+const playerCells = []
+const botCells = []
+const playerShips = []
+const botShips = []
+let playerShipsCount = 5
+let botShipsCount = 5
 class Cell {
   constructor(id) {
     this.id = id
@@ -37,19 +42,26 @@ class Ship {
   }
 }
 
-const playerCells = []
-const botCells = []
-const playerShips = []
-const botShips = []
-const playerShipsCount = 5
-const botShipsCount = 5
-
 const turn = () => {
+  if (playerShipsCount === 0) {
+    alert('Bot wins!')
+    gameStart = false
+    resetButton.click()
+  }
+  if (botShipsCount === 0) {
+    alert('Player wins!')
+    gameStart = false
+    resetButton.click()
+  }
+  if (!gameStart) {
+    turnText.innerText = 'Game not started yet'
+    return
+  }
   if (playerTurn) {
     turnText.innerText = 'bot Turn'
     playerTurn = false
   } else {
-    turnText.innerText = 'player Turn'
+    turnText.innerText = 'Bot Turn'
     playerTurn = true
   }
 }
@@ -72,6 +84,17 @@ const hitCell = (box, element) => {
       const ship = botShips.find((ship) => ship.cells.includes(cell))
       ship.checkSunk()
       if (ship.isSunk) {
+        botShipsCount--
+        if (botShipsCount === 0) {
+          alert('You sunk all ships! You win!')
+          gameStart = false
+          startButton.style.backgroundColor = 'white'
+          startButton.style.color = 'black'
+          startButton.style.border = '1px solid black'
+          startButton.innerText = 'Start Game'
+          startButton.style.cursor = 'pointer'
+          startButton.disabled = false
+        }
         alert('You sunk a ship!')
       }
     } else {
@@ -128,7 +151,17 @@ const botTurn = () => {
     const ship = playerShips.find((ship) => ship.cells.includes(cell))
     ship.checkSunk()
     if (ship.isSunk) {
-      alert('Bot sunk your ship!')
+      playerShipsCount--
+      if (playerShipsCount === 0) {
+        alert('Bot sunk all your ships! You lose!')
+        gameStart = false
+        startButton.style.backgroundColor = 'white'
+        startButton.style.color = 'black'
+        startButton.style.border = '1px solid black'
+        startButton.innerText = 'Start Game'
+        startButton.style.cursor = 'pointer'
+        startButton.disabled = false
+      }
     }
     setTimeout(() => {
       botTurn()
