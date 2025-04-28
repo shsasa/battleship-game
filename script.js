@@ -11,6 +11,13 @@ const playerShips = []
 const botShips = []
 let playerShipsCount = 5
 let botShipsCount = 5
+let botWinCount = 0
+let playerWinCount = 0
+
+const playerShipsCountText = document.getElementById('player-info')
+const botShipsCountText = document.getElementById('bot-info')
+const winnerInfo = document.getElementById('winner-info')
+const gameStatus = document.getElementById('game-status')
 class Cell {
   constructor(id) {
     this.id = id
@@ -59,11 +66,18 @@ const turn = () => {
     return
   }
   if (playerTurn) {
-    turnText.innerText = 'bot Turn'
+    turnText.innerText = 'Bot turn'
     playerTurn = false
   } else {
-    turnText.innerText = 'Bot Turn'
+    turnText.innerText = 'Your turn'
     playerTurn = true
+  }
+  if (playerTurn) {
+    botShipsCountText.innerText = botShipsCount
+    playerShipsCountText.innerText = playerShipsCount
+  } else {
+    playerShipsCountText.innerText = playerShipsCount
+    botShipsCountText.innerText = botShipsCount
   }
 }
 
@@ -88,9 +102,12 @@ const hitCell = (box, element) => {
         botShipsCount--
         if (botShipsCount === 0) {
           alert('You sunk all ships! You win!')
+          winnerInfo.innerText = 'You win!'
+          gameStatus.innerText = ''
           gameStart = false
 
           startButton.disabled = false
+          playerWinCount++
         }
         alert('You sunk a ship!')
       }
@@ -151,6 +168,7 @@ const botTurn = () => {
       playerShipsCount--
       if (playerShipsCount === 0) {
         alert('Bot sunk all your ships! You lose!')
+        botWinCount++
         gameStart = false
 
         startButton.disabled = false
@@ -228,6 +246,11 @@ const startGame = () => {
   botShips.push(new Ship('ship5', 2, Math.random() < 0.5))
   addShips(playerCells, playerShips, true)
   addShips(botCells, botShips, false)
+  playerShipsCountText.innerText = playerShipsCount
+  botShipsCountText.innerText = botShipsCount
+  turnText.innerText = 'Your turn'
+  gameStatus.innerText = 'Game started'
+  turnText.style.color = 'green'
 }
 
 startButton.addEventListener('click', () => {
@@ -255,10 +278,13 @@ resetButton.addEventListener('click', () => {
   botCells.length = 0
   playerBox.innerHTML = ''
   botBox.innerHTML = ''
+  playerShipsCountText.innerText = playerShipsCount
+  botShipsCountText.innerText = botShipsCount
 
   startButton.disabled = false
   turnText.innerText = 'Game not started yet'
   const cells = document.querySelectorAll('.cell')
+
   cells.forEach((cell) => {
     cell.classList = 'cell'
   })
