@@ -89,10 +89,7 @@ const hitCell = (box, element) => {
         if (botShipsCount === 0) {
           alert('You sunk all ships! You win!')
           gameStart = false
-          startButton.style.backgroundColor = 'white'
-          startButton.style.color = 'black'
-          startButton.style.border = '1px solid black'
-          startButton.innerText = 'Start Game'
+
           startButton.disabled = false
         }
         alert('You sunk a ship!')
@@ -155,10 +152,7 @@ const botTurn = () => {
       if (playerShipsCount === 0) {
         alert('Bot sunk all your ships! You lose!')
         gameStart = false
-        startButton.style.backgroundColor = 'white'
-        startButton.style.color = 'black'
-        startButton.style.border = '1px solid black'
-        startButton.innerText = 'Start Game'
+
         startButton.disabled = false
       }
     }
@@ -212,13 +206,7 @@ const addShips = (cells, ships, player) => {
       ship.cells.forEach((cell) => {
         const cellElement = document.getElementById(cell.id)
 
-        if (ship.cells[0].id === cell.id) {
-          if (ship.horizontal) {
-            cellElement.classList = `ship-${ship.length}-h`
-          } else {
-            cellElement.classList = `ship-${ship.length}-v`
-          }
-        }
+        cellElement.classList = `ship`
       })
     })
   }
@@ -248,10 +236,7 @@ startButton.addEventListener('click', () => {
     return
   }
   gameStart = true
-  startButton.style.backgroundColor = 'green'
-  startButton.style.color = 'white'
-  startButton.style.border = '1px solid green'
-  startButton.innerText = 'Game Started'
+
   startButton.disabled = true
   startGame()
 })
@@ -260,11 +245,21 @@ resetButton.addEventListener('click', () => {
     alert('Game not started yet')
     return
   }
-
   gameStart = false
-  startButton.style.backgroundColor = 'white'
-  startButton.style.color = 'black'
-  startButton.style.border = '1px solid black'
-  startButton.innerText = 'Start Game'
+  playerTurn = true
+  playerShipsCount = 5
+  botShipsCount = 5
+  playerShips.length = 0
+  botShips.length = 0
+  playerCells.length = 0
+  botCells.length = 0
+  playerBox.innerHTML = ''
+  botBox.innerHTML = ''
+
   startButton.disabled = false
+  turnText.innerText = 'Game not started yet'
+  const cells = document.querySelectorAll('.cell')
+  cells.forEach((cell) => {
+    cell.classList = 'cell'
+  })
 })
