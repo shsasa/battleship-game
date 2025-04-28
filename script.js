@@ -20,11 +20,12 @@ class Cell {
 }
 
 class Ship {
-  constructor(id, length) {
+  constructor(id, length, horizontal) {
     this.id = id
     this.length = length
     this.cells = []
     this.isSunk = false
+    this.horizontal = horizontal
   }
 
   addCell(cell) {
@@ -80,7 +81,7 @@ const hitCell = (box, element) => {
     }
     if (cell.isShip) {
       cell.isHit = true
-      element.target.style.backgroundColor = 'red'
+      element.target.classList = 'cell-hit'
       const ship = botShips.find((ship) => ship.cells.includes(cell))
       ship.checkSunk()
       if (ship.isSunk) {
@@ -92,14 +93,13 @@ const hitCell = (box, element) => {
           startButton.style.color = 'black'
           startButton.style.border = '1px solid black'
           startButton.innerText = 'Start Game'
-          startButton.style.cursor = 'pointer'
           startButton.disabled = false
         }
         alert('You sunk a ship!')
       }
     } else {
       cell.isHit = true
-      element.target.style.backgroundColor = 'black'
+      element.target.classList = 'cell-non-a'
 
       setTimeout(() => {
         turn()
@@ -147,7 +147,7 @@ const botTurn = () => {
   cell.isHit = true
   const cellElement = document.getElementById(cell.id)
   if (cell.isShip) {
-    cellElement.style.backgroundColor = 'red'
+    cellElement.classList = 'cell-hit'
     const ship = playerShips.find((ship) => ship.cells.includes(cell))
     ship.checkSunk()
     if (ship.isSunk) {
@@ -159,7 +159,6 @@ const botTurn = () => {
         startButton.style.color = 'black'
         startButton.style.border = '1px solid black'
         startButton.innerText = 'Start Game'
-        startButton.style.cursor = 'pointer'
         startButton.disabled = false
       }
     }
@@ -168,21 +167,20 @@ const botTurn = () => {
     }, 2000)
     return
   } else {
-    cellElement.style.backgroundColor = 'black'
+    cellElement.classList = 'cell-non-a'
     turn()
   }
 }
 
-const addShips = (cells, ships) => {
+const addShips = (cells, ships, player) => {
   ships.forEach((ship) => {
     let placed = false
     while (!placed) {
-      const direction = Math.random() < 0.5 ? 'horizontal' : 'vertical'
       const startCell = Math.floor(Math.random() * 100)
       const cellsToPlace = []
       for (let i = 0; i < ship.length; i++) {
         let cellId
-        if (direction === 'horizontal') {
+        if (ship.horizontal) {
           cellId = startCell + i
           if (cellId % 10 === 0) {
             break
@@ -209,11 +207,18 @@ const addShips = (cells, ships) => {
     }
   })
 
-  if (cells === playerCells) {
+  if (player) {
     ships.forEach((ship) => {
       ship.cells.forEach((cell) => {
         const cellElement = document.getElementById(cell.id)
-        cellElement.style.backgroundColor = 'blue'
+
+        if (ship.cells[0].id === cell.id) {
+          if (ship.horizontal) {
+            cellElement.classList = `ship-${ship.length}-h`
+          } else {
+            cellElement.classList = `ship-${ship.length}-v`
+          }
+        }
       })
     })
   }
@@ -223,18 +228,18 @@ const startGame = () => {
   addCellToBox(playerBox)
   addCellToBox(botBox)
 
-  playerShips.push(new Ship('ship1', 5))
-  playerShips.push(new Ship('ship2', 4))
-  playerShips.push(new Ship('ship3', 3))
-  playerShips.push(new Ship('ship4', 3))
-  playerShips.push(new Ship('ship5', 2))
-  botShips.push(new Ship('ship1', 5))
-  botShips.push(new Ship('ship2', 4))
-  botShips.push(new Ship('ship3', 3))
-  botShips.push(new Ship('ship4', 3))
-  botShips.push(new Ship('ship5', 2))
-  addShips(playerCells, playerShips)
-  addShips(botCells, botShips)
+  playerShips.push(new Ship('ship1', 5, Math.random() < 0.5))
+  playerShips.push(new Ship('ship2', 4, Math.random() < 0.5))
+  playerShips.push(new Ship('ship3', 3, Math.random() < 0.5))
+  playerShips.push(new Ship('ship4', 3, Math.random() < 0.5))
+  playerShips.push(new Ship('ship5', 2, Math.random() < 0.5))
+  botShips.push(new Ship('ship1', 5, Math.random() < 0.5))
+  botShips.push(new Ship('ship2', 4, Math.random() < 0.5))
+  botShips.push(new Ship('ship3', 3, Math.random() < 0.5))
+  botShips.push(new Ship('ship4', 3, Math.random() < 0.5))
+  botShips.push(new Ship('ship5', 2, Math.random() < 0.5))
+  addShips(playerCells, playerShips, true)
+  addShips(botCells, botShips, false)
 }
 
 startButton.addEventListener('click', () => {
@@ -247,7 +252,6 @@ startButton.addEventListener('click', () => {
   startButton.style.color = 'white'
   startButton.style.border = '1px solid green'
   startButton.innerText = 'Game Started'
-  startButton.style.cursor = 'not-allowed'
   startButton.disabled = true
   startGame()
 })
@@ -262,6 +266,5 @@ resetButton.addEventListener('click', () => {
   startButton.style.color = 'black'
   startButton.style.border = '1px solid black'
   startButton.innerText = 'Start Game'
-  startButton.style.cursor = 'pointer'
   startButton.disabled = false
 })

@@ -41,7 +41,9 @@ main {
 .cell {
   width: 30px;
   height: 30px;
-  background-color: aqua;
+  background-image: url('images/water.png');
+  background-size: 30px;
+  /* background-color: aqua; */
   /* margin: 1px; */
 }
 button {
@@ -50,6 +52,21 @@ button {
   background-color: aqua;
   border: none;
   cursor: pointer;
+}
+
+.cell-non-a {
+  width: 30px;
+  height: 30px;
+  background-image: url('images/water.png');
+  background-size: 30px;
+  background-color: rgba(255, 0, 0, 0.3);
+  background-blend-mode: multiply;
+}
+.cell-hit {
+  width: 30px;
+  height: 30px;
+  background-image: url('images/hit.jpg');
+  background-size: 30px;
 }
 .game-info {
   display: flex;
@@ -60,4 +77,30 @@ button {
   align-items: center;
 
   margin-top: 20px;
+}
+
+.ship-2-h {
+  background-image: url('images/ship2.png');
+  height: 60px;
+  width: 30px;
+  /* background-color: aqua; */
+  transform: rotate(90deg);
+  /* transform-origin: left; */
+}
+.ship-2-v {
+  background-image: url('images/ship2.png');
+  height: 30px;
+  width: 60px;
+
+  /* background-color: aqua; */
+  /* transform-origin: left; */
+}
+.ship-3-h {
+  background-image: url('images/ship3.png');
+}
+.ship-4-h {
+  background-image: url('images/ship4.png');
+}
+.ship-5-h {
+  background-image: url('images/ship5.png');
 }
