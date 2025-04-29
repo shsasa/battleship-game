@@ -18,6 +18,7 @@ const playerShipsCountText = document.getElementById('player-info')
 const botShipsCountText = document.getElementById('bot-info')
 const winnerInfo = document.getElementById('winner-info')
 const gameStatus = document.getElementById('game-status')
+const notificationText = document.getElementById('notification')
 class Cell {
   constructor(id) {
     this.id = id
@@ -81,16 +82,23 @@ const turn = () => {
   }
 }
 
+const updateNotification = (updateText) => {
+  notificationText.innerText = updateText
+  setTimeout(() => {
+    notificationText.innerText = ''
+  }, 3000)
+}
+
 const hitCell = (box, element) => {
   if (playerTurn) {
     if (box.id === 'player') {
-      alert('You cannot hit your own ship')
+      updateNotification('You cannot hit your own ship')
       return
     }
     const cellId = element.target.id
     const cell = botCells.find((cell) => cell.id === cellId)
     if (cell.isHit) {
-      alert('Already hit this cell')
+      updateNotification('Already hit this cell')
       return
     }
     if (cell.isShip) {
@@ -101,7 +109,7 @@ const hitCell = (box, element) => {
       if (ship.isSunk) {
         botShipsCount--
         if (botShipsCount === 0) {
-          alert('You sunk all ships! You win!')
+          updateNotification('You sunk all ships! You win!')
           winnerInfo.innerText = 'You win!'
           gameStatus.innerText = ''
           gameStart = false
@@ -109,7 +117,7 @@ const hitCell = (box, element) => {
           startButton.disabled = false
           playerWinCount++
         }
-        alert('You sunk a ship!')
+        updateNotification('You sunk a ship!')
       }
     } else {
       cell.isHit = true
@@ -167,7 +175,7 @@ const botTurn = () => {
     if (ship.isSunk) {
       playerShipsCount--
       if (playerShipsCount === 0) {
-        alert('Bot sunk all your ships! You lose!')
+        updateNotification('Bot sunk all your ships! You lose!')
         botWinCount++
         gameStart = false
 
@@ -255,7 +263,7 @@ const startGame = () => {
 
 startButton.addEventListener('click', () => {
   if (gameStart) {
-    alert('Game already started')
+    updateNotification('Game already started')
     return
   }
   gameStart = true
@@ -265,7 +273,7 @@ startButton.addEventListener('click', () => {
 })
 resetButton.addEventListener('click', () => {
   if (!gameStart) {
-    alert('Game not started yet')
+    updateNotification('Game not started yet')
     return
   }
   gameStart = false
