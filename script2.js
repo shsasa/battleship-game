@@ -138,20 +138,30 @@ const hitCell = (box, element) => {
 const handleDropShip = (event, boxId) => {
   if (boxId !== 'player') return
 
-  const shipId = event.dataTransfer.getData('shipId')
-  const shipLength = parseInt(event.dataTransfer.getData('shipLength'))
-  const shipHorizontal = event.dataTransfer.getData('shipHorizontal') === 'true'
+  event.preventDefault()
 
-  const shipElement = document.getElementById(shipId)
-  const dropCellId = event.target.id
+  const shipId = event.dataTransfer.getData('shipId')
+
+  const ship = playerShips.find((ship) => ship.id === shipId)
+
+  const dropCell = event.target
+
+  if (!dropCell.classList.contains('cell')) {
+    updateNotification('You must drop on a valid cell.', 'red')
+    return
+  }
+
+  const dropCellId = dropCell.id
   const cellIndex = playerCells.findIndex((cell) => cell.id === dropCellId)
 
   if (cellIndex === -1) return
 
   const cellsToOccupy = []
-  for (let i = 0; i < shipLength; i++) {
+
+  for (let i = 0; i < ship.length; i++) {
     let targetIndex
-    if (shipHorizontal) {
+    console.log(ship.horizontal)
+    if (ship.horizontal) {
       targetIndex = cellIndex + i
       if (Math.floor(targetIndex / 10) !== Math.floor(cellIndex / 10)) {
         updateNotification('Cannot place ship across rows!', 'red')
@@ -176,10 +186,12 @@ const handleDropShip = (event, boxId) => {
   cellsToOccupy.forEach((cell) => {
     cell.isShip = true
     const cellElement = document.getElementById(cell.id)
-    cellElement.classList = 'ship'
+    cellElement.classList.add('ship')
   })
 
+  const shipElement = document.getElementById(shipId)
   shipElement.remove()
+
   if (shipListContainer.children.length === 0) {
     shipsPlaced = true
     updateNotification('All ships placed! You can start playing.', 'green')
@@ -224,45 +236,43 @@ const addCellToBox = (box) => {
   }
 }
 const botTurn = () => {
-  if (playerTurn) {
-    return
-  }
-  const availableCells = playerCells.filter((cell) => !cell.isHit)
-  const randomCell =
-    availableCells[Math.floor(Math.random() * availableCells.length)]
+  if (playerTurn || !gameStart) return
 
-  const cell = randomCell
-  if (cell.isHit) {
-    return
-  }
+  const availableCells = playerCells.filter((cell) => !cell.isHit)
+  if (availableCells.length === 0) return
+
+  const cell = availableCells[Math.floor(Math.random() * availableCells.length)]
+
   cell.isHit = true
   const cellElement = document.getElementById(cell.id)
+
   if (cell.isShip) {
     cellElement.classList = 'cell-hit'
     const ship = playerShips.find((ship) => ship.cells.includes(cell))
-    ship.checkSunk()
-    if (ship.isSunk) {
-      playerShipsCount--
-      if (playerShipsCount === 0) {
-        updateNotification('Bot sunk all your ships! You lose!', 'red')
-        botWinCount++
-        gameStart = false
-
-        startButton.disabled = false
+    if (ship) {
+      ship.checkSunk()
+      if (ship.isSunk) {
+        playerShipsCount--
+        if (playerShipsCount === 0) {
+          updateNotification('Bot sunk all your ships! You lose!', 'red')
+          botWinCount++
+          gameStart = false
+          startButton.disabled = false
+          return
+        }
       }
     }
-    setTimeout(() => {
-      botTurn()
-    }, 2000)
-    return
+    setTimeout(botTurn, 2000)
   } else {
     cellElement.classList = 'cell-non-a'
     turn()
   }
 }
+
 const dragstartHandler = (ev) => {
   const shipId = ev.target.id
   const ship = playerShips.find((ship) => ship.id === shipId)
+  if (!ship) return
   ev.dataTransfer.setData('shipId', ship.id)
   ev.dataTransfer.setData('shipLength', ship.length)
   ev.dataTransfer.setData('shipHorizontal', ship.horizontal)
@@ -274,7 +284,7 @@ const dragoverHandler = (ev) => {
 
 const dropHandler = (ev) => {
   const shipId = ev.dataTransfer.getData('shipId')
-  const shipLength = parseInt(event.dataTransfer.getData('shipLength'))
+  const shipLength = parseInt(e.dataTransfer.getData('shipLength'))
 }
 
 const addShips = (cells, ships, player) => {
@@ -328,7 +338,9 @@ const sortShips = (ships) => {
     shipElement.id = ship.id
     shipElement.draggable = true
     shipElement.classList.add('ship')
-    shipElement.classList.add(`ship-${ship.length}-h`)
+    shipElement.classList.add(
+      `ship-${ship.length}-${ship.horizontal ? 'h' : 'v'}`
+    )
 
     shipElement.dataset.length = ship.length
     shipElement.dataset.horizontal = ship.horizontal
@@ -336,6 +348,7 @@ const sortShips = (ships) => {
     shipElement.addEventListener('dragstart', dragstartHandler)
 
     shipListContainer.appendChild(shipElement)
+    console.log(ship)
   })
 }
 

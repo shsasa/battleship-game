@@ -43,8 +43,6 @@ main {
   height: 30px;
   background-image: url('images/water.png');
   background-size: 30px;
-  /* background-color: aqua; */
-  /* margin: 1px; */
 }
 .cell:hover {
   background-color: rgba(255, 0, 0, 0.1);
@@ -53,7 +51,6 @@ main {
   background-blend-mode: multiply;
 }
 button {
-  /* width: 30px; */
   height: 30px;
   background-color: aqua;
   border: none;
@@ -110,20 +107,32 @@ button:disabled {
 .ship-2-h {
   background-image: url('images/ship2.png');
   width: 40px;
+  height: 30px;
   background-size: 40px;
-  transform: rotate(90deg);
   transform-origin: left;
 }
 .ship-2-v {
   background-image: url('images/ship2.png');
+  width: 40px;
+  height: 30px;
 
-  background-size: 60px;
-
+  background-size: 40px;
+  transform: rotate(90deg);
   transform-origin: left;
 }
 .ship-3-h {
   background-image: url('images/ship3.png');
   width: 60px;
+  height: 30px;
+
+  background-size: 60px;
+  transform-origin: left;
+}
+.ship-3-v {
+  background-image: url('images/ship3.png');
+  width: 60px;
+  height: 30px;
+
   background-size: 60px;
   transform: rotate(90deg);
   transform-origin: left;
@@ -131,11 +140,27 @@ button:disabled {
 .ship-4-h {
   background-image: url('images/ship4.png');
   width: 80px;
-  background-size: 800px;
+  height: 30px;
+
+  background-size: 80px;
+  transform-origin: left;
+}
+.ship-4-v {
+  background-image: url('images/ship4.png');
+  width: 80px;
+  height: 30px;
+
+  background-size: 80px;
   transform: rotate(90deg);
   transform-origin: left;
 }
 .ship-5-h {
+  background-image: url('images/ship5.png');
+  width: 100px;
+  background-size: 100px;
+  transform-origin: left;
+}
+.ship-5-v {
   background-image: url('images/ship5.png');
   width: 100px;
   background-size: 100px;
@@ -157,4 +182,10 @@ button:disabled {
 }
 .notification-green {
   color: green;
+}
+.ship-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
