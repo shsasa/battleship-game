@@ -257,9 +257,21 @@ const addShips = (cells, ships, player) => {
 }
 const sortShips = (ships) => {
   for (let i = 0; i < ships.length; i++) {
-    const cell = document.cr('div')
+    const cell = document.createElement('div')
     cell.id = ships[i].name
-    cell.ondrop = dropHandler(event)
+    cell.draggable = true
+    cell.addEventListener('dragstart', dragstartHandler)
+    cell.addEventListener('dragover', dragoverHandler)
+    cell.addEventListener('drop', dropHandler)
+    // add image to the cell
+    const img = document.createElement('img')
+    img.src = `./images/ship${ships[i].length}.png`
+    console.log(img.src)
+
+    cell.appendChild(img)
+
+    // add cell to the ship list container
+    shipListContainer.appendChild(cell)
   }
 }
 
