@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script2.js" charset="utf-8"></script>
+    <title>Battle Ship Game</title>
+  </head>
+  <body>
+    <header>Welcome to Battleship</header>
+    <main>
+      <div class="game-info">
+        <div class="game-info-box">
+          <div>Player</div>
+          <div id="player-info">0</div>
+        </div>
+        <div class="game-info-box">
+          <div>Bot</div>
+          <div id="bot-info">0</div>
+        </div>
+        <div class="game-info-box">
+          <div>Turn</div>
+          <div id="turn-info"></div>
+        </div>
+        <div class="game-info-box">
+          <div>Winner</div>
+          <div id="winner-info">None</div>
+        </div>
+        <div class="game-info-box">
+          <div>Game Status</div>
+          <div id="game-status">Not Started</div>
+        </div>
+      </div>
+      <div id="notification" class="notification"></div>
+
+      <div class="war-area">
+        <div>
+          <div>Computer</div>
+          <div class="war-box" id="bot"></div>
+        </div>
+        <div>
+          <div>You</div>
+          <div class="war-box" id="player"></div>
+        </div>
+        <div>
+          <div>List of Ship</div>
+          <div class="shipList" id="shipList"></div>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <button id="start">Start Game</button>
+        <button id="reset">Reset Game</button>
+        <button onclick="window.location.href='about.html'">About</button>
+      </div>
+    </main>
+  </body>
+</html>
