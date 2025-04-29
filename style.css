@@ -20,6 +20,9 @@ header {
   display: grid;
   grid-template-rows: auto auto;
   grid-template-columns: repeat(10, 1fr);
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
 
   align-self: center;
 }
@@ -39,17 +42,21 @@ main {
 }
 
 .cell {
-  width: 30px;
-  height: 30px;
+  width: 4vh;
+  height: 4vh;
   background-image: url('images/water.png');
-  background-size: 30px;
+  background-size: 4vh;
 }
-.cell:hover {
+#bot .cell:hover {
   background-color: rgba(255, 0, 0, 0.1);
   background-image: url('images/targ.jpg');
 
   background-blend-mode: multiply;
+  cursor: pointer;
+  opacity: 0.5;
+  transform: scale(1.05);
 }
+
 button {
   height: 30px;
   background-color: aqua;
@@ -72,76 +79,68 @@ button:disabled {
 }
 
 .cell-non-a {
-  width: 30px;
-  height: 30px;
+  width: 4vh;
+  height: 4vh;
   background-image: url('images/water.png');
-  background-size: 30px;
+  background-size: 4vh;
   background-color: rgba(255, 0, 0, 0.3);
   background-blend-mode: multiply;
 }
 .cell-hit {
-  width: 30px;
-  height: 30px;
+  width: 4vh;
+  height: 4vh;
   background-image: url('images/hit.jpg');
   background-size: 30px;
 }
 .game-info {
-  display: flex;
-  flex-direction: row;
-  width: 50vw;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .ship {
-  width: 30px;
-  height: 30px;
+  width: 4vh;
+  height: 4vh;
   background-image: url('images/ship.png');
-  background-size: 30px;
   background-color: rgba(44, 173, 163, 0.153);
-  background-blend-mode: multiply;
 }
 
 .ship-2-h {
   background-image: url('images/ship2.png');
   width: 40px;
   height: 30px;
+  margin: 20px;
   background-size: 40px;
-  transform-origin: left;
 }
 .ship-2-v {
   background-image: url('images/ship2.png');
   width: 40px;
   height: 30px;
-
-  background-size: 40px;
+  margin: 20px;
   transform: rotate(90deg);
-  transform-origin: left;
+  background-size: 40px;
 }
 .ship-3-h {
   background-image: url('images/ship3.png');
   width: 60px;
   height: 30px;
-
+  margin: 20px;
   background-size: 60px;
-  transform-origin: left;
 }
 .ship-3-v {
   background-image: url('images/ship3.png');
   width: 60px;
   height: 30px;
-
+  margin: 20px;
   background-size: 60px;
   transform: rotate(90deg);
-  transform-origin: left;
 }
 .ship-4-h {
   background-image: url('images/ship4.png');
   width: 80px;
   height: 30px;
-
+  margin: 20px;
   background-size: 80px;
   transform-origin: left;
 }
@@ -149,21 +148,21 @@ button:disabled {
   background-image: url('images/ship4.png');
   width: 80px;
   height: 30px;
-
   background-size: 80px;
   transform: rotate(90deg);
-  transform-origin: left;
+  margin: 20px;
 }
 .ship-5-h {
   background-image: url('images/ship5.png');
   width: 100px;
   background-size: 100px;
-  transform-origin: left;
+  margin: 20px;
 }
 .ship-5-v {
   background-image: url('images/ship5.png');
   width: 100px;
   background-size: 100px;
+  margin: 20px;
   transform: rotate(90deg);
   transform-origin: left;
 }
