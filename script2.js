@@ -13,6 +13,7 @@ let playerShipsCount = 5
 let botShipsCount = 5
 let botWinCount = 0
 let playerWinCount = 0
+let shipsPlaced = false
 
 const playerShipsCountText = document.getElementById('player-info')
 const botShipsCountText = document.getElementById('bot-info')
@@ -90,6 +91,10 @@ const updateNotification = (updateText, color = 'black') => {
 }
 
 const hitCell = (box, element) => {
+  if (!shipsPlaced) {
+    updateNotification('You must place all ships before playing!', 'red')
+    return
+  }
   if (playerTurn) {
     if (box.id === 'player') {
       updateNotification('You cannot hit your own ship', 'red')
@@ -130,17 +135,80 @@ const hitCell = (box, element) => {
     }
   }
 }
+const handleDropShip = (event, boxId) => {
+  if (boxId !== 'player') return
+
+  const shipId = event.dataTransfer.getData('shipId')
+  const shipLength = parseInt(event.dataTransfer.getData('shipLength'))
+  const shipHorizontal = event.dataTransfer.getData('shipHorizontal') === 'true'
+
+  const shipElement = document.getElementById(shipId)
+  const dropCellId = event.target.id
+  const cellIndex = playerCells.findIndex((cell) => cell.id === dropCellId)
+
+  if (cellIndex === -1) return
+
+  const cellsToOccupy = []
+  for (let i = 0; i < shipLength; i++) {
+    let targetIndex
+    if (shipHorizontal) {
+      targetIndex = cellIndex + i
+      if (Math.floor(targetIndex / 10) !== Math.floor(cellIndex / 10)) {
+        updateNotification('Cannot place ship across rows!', 'red')
+        return
+      }
+    } else {
+      targetIndex = cellIndex + i * 10
+      if (targetIndex >= 100) {
+        updateNotification('Ship goes out of bounds!', 'red')
+        return
+      }
+    }
+
+    const targetCell = playerCells[targetIndex]
+    if (!targetCell || targetCell.isShip) {
+      updateNotification('Cannot place ship on occupied space!', 'red')
+      return
+    }
+    cellsToOccupy.push(targetCell)
+  }
+
+  cellsToOccupy.forEach((cell) => {
+    cell.isShip = true
+    const cellElement = document.getElementById(cell.id)
+    cellElement.classList = 'ship'
+  })
+
+  shipElement.remove()
+  if (shipListContainer.children.length === 0) {
+    shipsPlaced = true
+    updateNotification('All ships placed! You can start playing.', 'green')
+  }
+}
 
 const addCellToBox = (box) => {
   for (let i = 1; i <= 100; i++) {
     const cell = document.createElement('div')
     cell.classList = 'cell'
     cell.id = box.id + i
+
+    const newCell = new Cell(cell.id)
+
     if (box.id === 'player') {
-      playerCells.push(new Cell(cell.id))
+      playerCells.push(newCell)
+
+      cell.addEventListener('dragover', (e) => {
+        e.preventDefault()
+      })
+
+      cell.addEventListener('drop', (e) => {
+        e.preventDefault()
+        handleDropShip(e, box.id)
+      })
     }
+
     if (box.id === 'bot') {
-      botCells.push(new Cell(cell.id))
+      botCells.push(newCell)
     }
 
     cell.addEventListener('click', (element) => {
@@ -163,9 +231,8 @@ const botTurn = () => {
   const randomCell =
     availableCells[Math.floor(Math.random() * availableCells.length)]
 
-  const cell = playerCells[randomCell]
+  const cell = randomCell
   if (cell.isHit) {
-    botTurn()
     return
   }
   cell.isHit = true
@@ -194,7 +261,11 @@ const botTurn = () => {
   }
 }
 const dragstartHandler = (ev) => {
-  ev.dataTransfer.setData('text', ev.target.id)
+  const shipId = ev.target.id
+  const ship = playerShips.find((ship) => ship.id === shipId)
+  ev.dataTransfer.setData('shipId', ship.id)
+  ev.dataTransfer.setData('shipLength', ship.length)
+  ev.dataTransfer.setData('shipHorizontal', ship.horizontal)
 }
 
 const dragoverHandler = (ev) => {
@@ -202,9 +273,8 @@ const dragoverHandler = (ev) => {
 }
 
 const dropHandler = (ev) => {
-  ev.preventDefault()
-  const data = ev.dataTransfer.getData('text')
-  ev.target.appendChild(document.getElementById(data))
+  const shipId = ev.dataTransfer.getData('shipId')
+  const shipLength = parseInt(event.dataTransfer.getData('shipLength'))
 }
 
 const addShips = (cells, ships, player) => {
@@ -253,17 +323,20 @@ const addShips = (cells, ships, player) => {
   }
 }
 const sortShips = (ships) => {
-  for (let i = 0; i < ships.length; i++) {
-    const cell = document.createElement('div')
-    cell.id = ships[i].name
-    cell.draggable = true
-    cell.addEventListener('dragstart', dragstartHandler)
-    cell.addEventListener('dragover', dragoverHandler)
-    cell.addEventListener('drop', dropHandler)
-    cell.classList = `ship-${ships[i].length}-h`
+  ships.forEach((ship) => {
+    const shipElement = document.createElement('div')
+    shipElement.id = ship.id
+    shipElement.draggable = true
+    shipElement.classList.add('ship')
+    shipElement.classList.add(`ship-${ship.length}-h`)
 
-    shipListContainer.appendChild(cell)
-  }
+    shipElement.dataset.length = ship.length
+    shipElement.dataset.horizontal = ship.horizontal
+
+    shipElement.addEventListener('dragstart', dragstartHandler)
+
+    shipListContainer.appendChild(shipElement)
+  })
 }
 
 const startGame = () => {
@@ -280,9 +353,8 @@ const startGame = () => {
   botShips.push(new Ship('ship3', 3, Math.random() < 0.5))
   botShips.push(new Ship('ship4', 3, Math.random() < 0.5))
   botShips.push(new Ship('ship5', 2, Math.random() < 0.5))
-  // addShips(playerCells, playerShips, true)
-  sortShips(playerShips)
   addShips(botCells, botShips, false)
+  sortShips(playerShips)
   playerShipsCountText.innerText = playerShipsCount
   botShipsCountText.innerText = botShipsCount
   turnText.innerText = 'Your turn'
@@ -317,6 +389,8 @@ resetButton.addEventListener('click', () => {
   startButton.disabled = false
   turnText.innerText = 'Game not started yet'
   const cells = document.querySelectorAll('.cell')
+  shipListContainer.innerHTML = ''
+  shipsPlaced = false
 
   cells.forEach((cell) => {
     cell.classList = 'cell'

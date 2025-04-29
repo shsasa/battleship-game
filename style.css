@@ -109,30 +109,38 @@ button:disabled {
 
 .ship-2-h {
   background-image: url('images/ship2.png');
-
-  background-size: 60px;
-  background-color: aqua;
+  width: 40px;
+  background-size: 40px;
   transform: rotate(90deg);
-  background-color: rgba(255, 0, 0, 0.3);
   transform-origin: left;
 }
 .ship-2-v {
   background-image: url('images/ship2.png');
 
-  background-size: 30px;
-  background-color: rgba(255, 0, 0, 0.3);
+  background-size: 60px;
 
-  background-color: aqua;
   transform-origin: left;
 }
 .ship-3-h {
   background-image: url('images/ship3.png');
+  width: 60px;
+  background-size: 60px;
+  transform: rotate(90deg);
+  transform-origin: left;
 }
 .ship-4-h {
   background-image: url('images/ship4.png');
+  width: 80px;
+  background-size: 800px;
+  transform: rotate(90deg);
+  transform-origin: left;
 }
 .ship-5-h {
   background-image: url('images/ship5.png');
+  width: 100px;
+  background-size: 100px;
+  transform: rotate(90deg);
+  transform-origin: left;
 }
 #notification {
   height: 100px;
