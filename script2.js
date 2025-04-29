@@ -74,13 +74,8 @@ const turn = () => {
     turnText.innerText = 'Your turn'
     playerTurn = true
   }
-  if (playerTurn) {
-    botShipsCountText.innerText = botShipsCount
-    playerShipsCountText.innerText = playerShipsCount
-  } else {
-    playerShipsCountText.innerText = playerShipsCount
-    botShipsCountText.innerText = botShipsCount
-  }
+  playerShipsCountText.innerText = playerShipsCount
+  botShipsCountText.innerText = botShipsCount
 }
 
 const updateNotification = (updateText, color = 'black') => {
