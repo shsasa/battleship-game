@@ -164,8 +164,10 @@ const botTurn = () => {
   if (playerTurn) {
     return
   }
+  const availableCells = playerCells.filter((cell) => !cell.isHit)
+  const randomCell =
+    availableCells[Math.floor(Math.random() * availableCells.length)]
 
-  const randomCell = Math.floor(Math.random() * 100)
   const cell = playerCells[randomCell]
   if (cell.isHit) {
     botTurn()
@@ -263,14 +265,8 @@ const sortShips = (ships) => {
     cell.addEventListener('dragstart', dragstartHandler)
     cell.addEventListener('dragover', dragoverHandler)
     cell.addEventListener('drop', dropHandler)
-    // add image to the cell
-    const img = document.createElement('img')
-    img.src = `./images/ship${ships[i].length}.png`
-    console.log(img.src)
+    cell.classList = `ship-${ships[i].length}-h`
 
-    cell.appendChild(img)
-
-    // add cell to the ship list container
     shipListContainer.appendChild(cell)
   }
 }
@@ -310,10 +306,6 @@ startButton.addEventListener('click', () => {
   startGame()
 })
 resetButton.addEventListener('click', () => {
-  if (!gameStart) {
-    updateNotification('Game not started yet')
-    return
-  }
   gameStart = false
   playerTurn = true
   playerShipsCount = 5
