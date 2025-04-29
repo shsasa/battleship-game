@@ -277,15 +277,6 @@ const dragstartHandler = (ev) => {
   ev.dataTransfer.setData('shipHorizontal', ship.horizontal)
 }
 
-const dragoverHandler = (ev) => {
-  ev.preventDefault()
-}
-
-const dropHandler = (ev) => {
-  const shipId = ev.dataTransfer.getData('shipId')
-  const shipLength = parseInt(e.dataTransfer.getData('shipLength'))
-}
-
 const addShips = (cells, ships, player) => {
   ships.forEach((ship) => {
     let placed = false
