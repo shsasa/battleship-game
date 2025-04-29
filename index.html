@@ -10,19 +10,6 @@
   <body>
     <header>Welcome to Battleship</header>
     <main>
-      <div id="notification" class="notification"></div>
-
-      <div class="war-area">
-        <div>
-          <div>bot</div>
-          <div class="war-box" id="bot"></div>
-        </div>
-        <div>
-          <div>player</div>
-          <div class="war-box" id="player"></div>
-        </div>
-      </div>
-
       <div class="game-info">
         <div class="game-info-box">
           <div>Player</div>
@@ -44,7 +31,21 @@
           <div>Game Status</div>
           <div id="game-status">Not Started</div>
         </div>
+      </div>
+      <div id="notification" class="notification"></div>
 
+      <div class="war-area">
+        <div>
+          <div>Computer</div>
+          <div class="war-box" id="bot"></div>
+        </div>
+        <div>
+          <div>You</div>
+          <div class="war-box" id="player"></div>
+        </div>
+      </div>
+
+      <div class="game-info">
         <button id="start">Start Game</button>
         <button id="reset">Reset Game</button>
         <button onclick="window.location.href='about.html'">About</button>
