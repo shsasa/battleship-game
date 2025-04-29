@@ -82,23 +82,27 @@ const turn = () => {
   }
 }
 
-const updateNotification = (updateText) => {
+const updateNotification = (updateText, color = 'black') => {
   notificationText.innerText = updateText
   setTimeout(() => {
     notificationText.innerText = ''
   }, 3000)
+
+  if (color) {
+    notificationText.style.color = color
+  }
 }
 
 const hitCell = (box, element) => {
   if (playerTurn) {
     if (box.id === 'player') {
-      updateNotification('You cannot hit your own ship')
+      updateNotification('You cannot hit your own ship', 'red')
       return
     }
     const cellId = element.target.id
     const cell = botCells.find((cell) => cell.id === cellId)
     if (cell.isHit) {
-      updateNotification('Already hit this cell')
+      updateNotification('Already hit this cell', 'red')
       return
     }
     if (cell.isShip) {
@@ -109,7 +113,7 @@ const hitCell = (box, element) => {
       if (ship.isSunk) {
         botShipsCount--
         if (botShipsCount === 0) {
-          updateNotification('You sunk all ships! You win!')
+          updateNotification('You sunk all ships! You win!', 'green')
           winnerInfo.innerText = 'You win!'
           gameStatus.innerText = ''
           gameStart = false
@@ -117,7 +121,7 @@ const hitCell = (box, element) => {
           startButton.disabled = false
           playerWinCount++
         }
-        updateNotification('You sunk a ship!')
+        updateNotification('You sunk a ship!', 'green')
       }
     } else {
       cell.isHit = true
@@ -175,7 +179,7 @@ const botTurn = () => {
     if (ship.isSunk) {
       playerShipsCount--
       if (playerShipsCount === 0) {
-        updateNotification('Bot sunk all your ships! You lose!')
+        updateNotification('Bot sunk all your ships! You lose!', 'red')
         botWinCount++
         gameStart = false
 
