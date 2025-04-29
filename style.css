@@ -107,33 +107,33 @@ button:disabled {
   background-blend-mode: multiply;
 }
 
-/* .ship-2-h {
+.ship-2-h {
   background-image: url('images/ship2.png');
 
-  /* background-size: 60px; */
-/* background-color: aqua; */
-/* transform: rotate(90deg); */
-/* background-color: rgba(255, 0, 0, 0.3); */
-/* transform-origin: left; */
-/* } */
-/* .ship-2-v {
+  background-size: 60px;
+  background-color: aqua;
+  transform: rotate(90deg);
+  background-color: rgba(255, 0, 0, 0.3);
+  transform-origin: left;
+}
+.ship-2-v {
   background-image: url('images/ship2.png');
 
-  /* background-size: 30px; */
-/* background-color: rgba(255, 0, 0, 0.3); */
+  background-size: 30px;
+  background-color: rgba(255, 0, 0, 0.3);
 
-/* background-color: aqua; */
-/* transform-origin: left; */
-/* } */
-/* .ship-3-h { */
-/* background-image: url('images/ship3.png'); */
-/* } */
-/* .ship-4-h { */
-/* background-image: url('images/ship4.png'); */
-/* } */
-/* .ship-5-h { */
-/* background-image: url('images/ship5.png'); */
-/* } */
+  background-color: aqua;
+  transform-origin: left;
+}
+.ship-3-h {
+  background-image: url('images/ship3.png');
+}
+.ship-4-h {
+  background-image: url('images/ship4.png');
+}
+.ship-5-h {
+  background-image: url('images/ship5.png');
+}
 #notification {
   height: 100px;
   width: 80vw;
